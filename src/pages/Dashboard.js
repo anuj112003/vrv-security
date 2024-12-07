@@ -8,6 +8,7 @@ function Dashboard() {
   return (
     <div className="dashboard">
       <nav className="dashboard-nav flex justify-center bg-gray-800 py-4">
+      <div className="text-white text-4xl">VRV security</div>
         <button
           className={`mx-2 px-6 py-2 rounded-full font-semibold ${
             activeTab === "users"
@@ -30,7 +31,7 @@ function Dashboard() {
         </button>
       </nav>
 
-      <div className="dashboard-content p-6">
+      <div className= {`dashboard-content p-6 ${activeTab === "users" ? "bg-blue-500 h-full w-full ": " bg-green-500 h-full w-full" } `}>
         {activeTab === "users" ? <UserTable /> : <RoleTable />}
       </div>
     </div>

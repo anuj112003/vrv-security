@@ -1,3 +1,7 @@
+
+
+
+
 import React, { useState, useEffect } from "react";
 import UserForm from "./UserForm";
 
@@ -7,7 +11,6 @@ function UserTable() {
   const [showForm, setShowForm] = useState(false);
   const [editingUser, setEditingUser] = useState(null);
 
-  // Load users and roles from localStorage
   useEffect(() => {
     const savedUsers = JSON.parse(localStorage.getItem("users")) || [];
     const savedRoles = JSON.parse(localStorage.getItem("roles")) || [];
@@ -15,12 +18,10 @@ function UserTable() {
     setRoles(savedRoles);
   }, []);
 
-  // Save users to localStorage
   useEffect(() => {
     localStorage.setItem("users", JSON.stringify(users));
   }, [users]);
 
-  // Handle Add/Edit User
   const handleSaveUser = (user) => {
     if (editingUser) {
       setUsers((prev) =>
@@ -33,19 +34,18 @@ function UserTable() {
     setShowForm(false);
   };
 
-  // Handle Delete User
   const handleDelete = (id) => {
     setUsers((prev) => prev.filter((u) => u.id !== id));
   };
 
   return (
-    <div className="container mx-auto p-6">
-      <div className="bg-white shadow-lg rounded-lg p-6">
+    <div className="container mx-auto p-6 space-y-6">
+      <div className="bg-gradient-to-r from-purple-500 to-pink-500 shadow-lg rounded-lg p-8">
         {/* Header Section */}
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-gray-700">User Management</h2>
+          <h2 className="text-3xl font-bold text-white">User Management</h2>
           <button
-            className="bg-blue-500 text-white font-semibold px-5 py-2 rounded-full shadow-lg hover:bg-blue-600 transition duration-300"
+            className="bg-gradient-to-r from-green-400 to-teal-500 text-white font-semibold px-6 py-3 rounded-lg shadow-lg hover:scale-105 transform transition duration-300"
             onClick={() => setShowForm(true)}
           >
             {editingUser ? "Edit User" : "Add User"}
@@ -54,14 +54,14 @@ function UserTable() {
 
         {/* Users Table */}
         <div className="overflow-x-auto">
-          <table className="table-auto w-full bg-gray-50 shadow-md rounded-lg">
-            <thead className="bg-gradient-to-r from-blue-500 to-blue-700 text-white">
+          <table className="table-auto w-full bg-white shadow-md rounded-lg">
+            <thead className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white">
               <tr>
-                <th className="px-4 py-3 text-left">Name</th>
-                <th className="px-4 py-3 text-left">Email</th>
-                <th className="px-4 py-3 text-left">Role</th>
-                <th className="px-4 py-3 text-left">Status</th>
-                <th className="px-4 py-3 text-left">Actions</th>
+                <th className="px-6 py-4 text-left text-lg">Name</th>
+                <th className="px-6 py-4 text-left text-lg">Email</th>
+                <th className="px-6 py-4 text-left text-lg">Role</th>
+                <th className="px-6 py-4 text-left text-lg">Status</th>
+                <th className="px-6 py-4 text-left text-lg">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -69,18 +69,26 @@ function UserTable() {
                 <tr
                   key={user.id}
                   className={`${
-                    index % 2 === 0 ? "bg-gray-100" : "bg-white"
-                  } hover:bg-gray-200`}
+                    index % 2 === 0 ? "bg-gray-100" : "bg-gray-50"
+                  } hover:bg-blue-100 transition duration-150`}
                 >
-                  <td className="px-4 py-3 border">{user.name}</td>
-                  <td className="px-4 py-3 border">{user.email}</td>
-                  <td className="px-4 py-3 border">{user.role}</td>
-                  <td className="px-4 py-3 border">
-                    {user.active ? "Active" : "Inactive"}
+                  <td className="px-6 py-4 border">{user.name}</td>
+                  <td className="px-6 py-4 border">{user.email}</td>
+                  <td className="px-6 py-4 border">{user.role}</td>
+                  <td className="px-6 py-4 border">
+                    <span
+                      className={`px-3 py-1 text-sm font-semibold rounded-full ${
+                        user.active
+                          ? "bg-green-100 text-green-800"
+                          : "bg-red-100 text-red-800"
+                      }`}
+                    >
+                      {user.active ? "Active" : "Inactive"}
+                    </span>
                   </td>
-                  <td className="px-4 py-3 border flex gap-2">
+                  <td className="px-6 py-4 border flex gap-3">
                     <button
-                      className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 transition"
+                      className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-4 py-2 rounded-lg hover:scale-105 transform transition duration-300"
                       onClick={() => {
                         setEditingUser(user);
                         setShowForm(true);
@@ -89,7 +97,7 @@ function UserTable() {
                       Edit
                     </button>
                     <button
-                      className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition"
+                      className="bg-gradient-to-r from-red-500 to-pink-600 text-white px-4 py-2 rounded-lg hover:scale-105 transform transition duration-300"
                       onClick={() => handleDelete(user.id)}
                     >
                       Delete
